@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.1.2 (Python 3.7.2 on win32)" generated="20190606 19:44:25.020" rpa="false">
+<suite id="s1" name="Brands" source="D:\PWSC\Brands\Brands.robot">
+<test id="s1-t1" name="Brand Details: As an user, i can able to create Brand Details (Post)">
+<kw name="Create Sessions" type="setup">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190606 19:44:25.301" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20190606 19:44:25.300" endtime="20190606 19:44:25.301"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>BrandDetails</arg>
+<arg>${url}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190606 19:44:25.301" level="INFO">Creating Session using : alias=BrandDetails, url=http://3.92.189.126:8545/api/bo, headers={'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190606 19:44:25.301" endtime="20190606 19:44:25.302"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:25.300" endtime="20190606 19:44:25.302"></status>
+</kw>
+<kw name="Get Input Data">
+<arguments>
+<arg>Brands.json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>json.load(open("${file}", "r"))</arg>
+<arg>json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<msg timestamp="20190606 19:44:25.310" level="INFO">${File} = {'brand_name': 'Shanmuka', 'brand_details': 'fruites', 'brand_slogan': ' Not good '}</msg>
+<status status="PASS" starttime="20190606 19:44:25.303" endtime="20190606 19:44:25.310"></status>
+</kw>
+<msg timestamp="20190606 19:44:25.310" level="INFO">${File} = {'brand_name': 'Shanmuka', 'brand_details': 'fruites', 'brand_slogan': ' Not good '}</msg>
+<status status="PASS" starttime="20190606 19:44:25.303" endtime="20190606 19:44:25.310"></status>
+</kw>
+<kw name="Api Call For Create Brand Details">
+<arguments>
+<arg>${File}</arg>
+</arguments>
+<assign>
+<var>${Object}</var>
+</assign>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>BrandDetails</arg>
+<arg>/brands</arg>
+<arg>data=${File}</arg>
+</arguments>
+<assign>
+<var>${Object}</var>
+</assign>
+<msg timestamp="20190606 19:44:25.891" level="INFO">Post Request using : alias=BrandDetails, uri=/brands, data=&lt;empty&gt;, headers=None, files=None, allow_redirects=True </msg>
+<msg timestamp="20190606 19:44:25.892" level="INFO">${Object} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:44:25.311" endtime="20190606 19:44:25.892"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>open("brand_id.json", "w").write('{"brand_id":"${Object.json()["body"]["brand_id"]}"}')</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:25.893" endtime="20190606 19:44:25.901"></status>
+</kw>
+<msg timestamp="20190606 19:44:25.903" level="INFO">${Object} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:44:25.311" endtime="20190606 19:44:25.903"></status>
+</kw>
+<kw name="Check Api Response BrandDetails">
+<arguments>
+<arg>${File}</arg>
+<arg>${Object}</arg>
+</arguments>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${Object.json()["status"]}</arg>
+<arg>${True}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:25.907" endtime="20190606 19:44:25.909"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${Object.json()["message"]}</arg>
+<arg>success</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:25.910" endtime="20190606 19:44:25.912"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:25.905" endtime="20190606 19:44:25.913"></status>
+</kw>
+<kw name="Get length for the File">
+<arguments>
+<arg>${File}</arg>
+</arguments>
+<assign>
+<var>${lenkeys}</var>
+</assign>
+<kw name="Get Dictionary Keys" library="Collections">
+<doc>Returns keys of the given ``dictionary`` as a list.</doc>
+<arguments>
+<arg>${File}</arg>
+</arguments>
+<assign>
+<var>${keys}</var>
+</assign>
+<msg timestamp="20190606 19:44:25.918" level="INFO">${keys} = ['brand_details', 'brand_name', 'brand_slogan']</msg>
+<status status="PASS" starttime="20190606 19:44:25.916" endtime="20190606 19:44:25.918"></status>
+</kw>
+<kw name="Sort List" library="Collections">
+<doc>Sorts the given list in place.</doc>
+<arguments>
+<arg>${keys}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:25.919" endtime="20190606 19:44:25.920"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${keys}</arg>
+</arguments>
+<assign>
+<var>${lenkeys}</var>
+</assign>
+<msg timestamp="20190606 19:44:25.921" level="INFO">Length is 3</msg>
+<msg timestamp="20190606 19:44:25.922" level="INFO">${lenkeys} = 3</msg>
+<status status="PASS" starttime="20190606 19:44:25.921" endtime="20190606 19:44:25.922"></status>
+</kw>
+<msg timestamp="20190606 19:44:25.923" level="INFO">${lenkeys} = 3</msg>
+<status status="PASS" starttime="20190606 19:44:25.914" endtime="20190606 19:44:25.923"></status>
+</kw>
+<kw name="Check Type Of Brand Details">
+<arguments>
+<arg>${File}</arg>
+<arg>${Object}</arg>
+</arguments>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>type($File["brand_name"]).__name__</arg>
+</arguments>
+<assign>
+<var>${brand_name}</var>
+</assign>
+<msg timestamp="20190606 19:44:25.946" level="INFO">${brand_name} = str</msg>
+<status status="PASS" starttime="20190606 19:44:25.925" endtime="20190606 19:44:25.947"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${File["brand_name"]}" != ""</arg>
+<arg>Should be equal</arg>
+<arg>${Object.json()['status']}</arg>
+<arg>${True}</arg>
+<arg>ELSE IF</arg>
+<arg>${brand_name} == str</arg>
+<arg>Should be equal</arg>
+<arg>${Object.json()['status']}</arg>
+<arg>${True}</arg>
+<arg>ELSE</arg>
+<arg>Should be equal</arg>
+<arg>${Object.json()['status']}</arg>
+<arg>${False}</arg>
+</arguments>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${Object.json()['status']}</arg>
+<arg>${True}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:25.949" endtime="20190606 19:44:25.951"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:25.947" endtime="20190606 19:44:25.951"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:25.924" endtime="20190606 19:44:25.952"></status>
+</kw>
+<tags>
+<tag>Positive</tag>
+</tags>
+<status status="PASS" starttime="20190606 19:44:25.299" endtime="20190606 19:44:25.953" critical="yes"></status>
+</test>
+<test id="s1-t2" name="Brand Details: As an user, i can able to Get Brand Details (Get)">
+<kw name="Create Sessions" type="setup">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190606 19:44:25.960" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20190606 19:44:25.959" endtime="20190606 19:44:25.961"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>BrandDetails</arg>
+<arg>${url}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190606 19:44:25.962" level="INFO">Creating Session using : alias=BrandDetails, url=http://3.92.189.126:8545/api/bo, headers={'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190606 19:44:25.962" endtime="20190606 19:44:25.964"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:25.958" endtime="20190606 19:44:25.964"></status>
+</kw>
+<kw name="Get Input Data">
+<arguments>
+<arg>brand_id.json</arg>
+</arguments>
+<assign>
+<var>${Object}</var>
+</assign>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>json.load(open("${file}", "r"))</arg>
+<arg>json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<msg timestamp="20190606 19:44:25.968" level="INFO">${File} = {'brand_id': '4'}</msg>
+<status status="PASS" starttime="20190606 19:44:25.966" endtime="20190606 19:44:25.969"></status>
+</kw>
+<msg timestamp="20190606 19:44:25.969" level="INFO">${Object} = {'brand_id': '4'}</msg>
+<status status="PASS" starttime="20190606 19:44:25.965" endtime="20190606 19:44:25.970"></status>
+</kw>
+<kw name="Api Call For Get Brand Details">
+<arguments>
+<arg>${Object}</arg>
+</arguments>
+<assign>
+<var>${result}</var>
+</assign>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>BrandDetails</arg>
+<arg>/brands?id=${Object['brand_id']}</arg>
+</arguments>
+<assign>
+<var>${result}</var>
+</assign>
+<msg timestamp="20190606 19:44:26.606" level="INFO">Get Request using : alias=BrandDetails, uri=/brands?id=4, headers=None json=None</msg>
+<msg timestamp="20190606 19:44:26.607" level="INFO">${result} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:44:25.975" endtime="20190606 19:44:26.607"></status>
+</kw>
+<msg timestamp="20190606 19:44:26.608" level="INFO">${result} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:44:25.973" endtime="20190606 19:44:26.609"></status>
+</kw>
+<kw name="Check Api Get Response Brand Details">
+<arguments>
+<arg>${result}</arg>
+<arg>${Object}</arg>
+</arguments>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${result.json()["status"]}</arg>
+<arg>${True}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:26.613" endtime="20190606 19:44:26.615"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${result.json()["message"]}</arg>
+<arg>success</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:26.616" endtime="20190606 19:44:26.618"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:26.610" endtime="20190606 19:44:26.618"></status>
+</kw>
+<kw name="Check Brand name is Unique name">
+<arguments>
+<arg>${result}</arg>
+<arg>${Object}</arg>
+</arguments>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${result.json()["body"][0]['brand_name']}</arg>
+<arg>Shanmuka</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:26.622" endtime="20190606 19:44:26.624"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:26.620" endtime="20190606 19:44:26.625"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${result.json()["body"]}</arg>
+</arguments>
+<assign>
+<var>${Len}</var>
+</assign>
+<msg timestamp="20190606 19:44:26.629" level="INFO">Length is 1</msg>
+<msg timestamp="20190606 19:44:26.629" level="INFO">${Len} = 1</msg>
+<status status="PASS" starttime="20190606 19:44:26.626" endtime="20190606 19:44:26.629"></status>
+</kw>
+<kw name="Check Get Brand Details Length">
+<arguments>
+<arg>${Len}</arg>
+<arg>${result}</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${Len}" != "0"</arg>
+<arg>Log</arg>
+<arg>${result.status_code}</arg>
+<arg>ELSE</arg>
+<arg>Should Be Equal</arg>
+<arg>${result.status_code}</arg>
+<arg>${200}</arg>
+</arguments>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${result.status_code}</arg>
+</arguments>
+<msg timestamp="20190606 19:44:26.636" level="INFO">200</msg>
+<status status="PASS" starttime="20190606 19:44:26.634" endtime="20190606 19:44:26.637"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:26.632" endtime="20190606 19:44:26.637"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:26.630" endtime="20190606 19:44:26.639"></status>
+</kw>
+<tags>
+<tag>Positive</tag>
+</tags>
+<status status="PASS" starttime="20190606 19:44:25.956" endtime="20190606 19:44:26.640" critical="yes"></status>
+</test>
+<test id="s1-t3" name="Brand Details: As an user, i can able to Update Brand Details (Update)">
+<kw name="Create Sessions" type="setup">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190606 19:44:26.651" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20190606 19:44:26.648" endtime="20190606 19:44:26.651"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>BrandDetails</arg>
+<arg>${url}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190606 19:44:26.653" level="INFO">Creating Session using : alias=BrandDetails, url=http://3.92.189.126:8545/api/bo, headers={'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190606 19:44:26.651" endtime="20190606 19:44:26.655"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:26.647" endtime="20190606 19:44:26.656"></status>
+</kw>
+<kw name="Get Input Data">
+<arguments>
+<arg>brand_id.json</arg>
+</arguments>
+<assign>
+<var>${Object}</var>
+</assign>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>json.load(open("${file}", "r"))</arg>
+<arg>json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<msg timestamp="20190606 19:44:26.663" level="INFO">${File} = {'brand_id': '4'}</msg>
+<status status="PASS" starttime="20190606 19:44:26.660" endtime="20190606 19:44:26.663"></status>
+</kw>
+<msg timestamp="20190606 19:44:26.664" level="INFO">${Object} = {'brand_id': '4'}</msg>
+<status status="PASS" starttime="20190606 19:44:26.658" endtime="20190606 19:44:26.664"></status>
+</kw>
+<kw name="Get Input Data">
+<arguments>
+<arg>Brand.json</arg>
+</arguments>
+<assign>
+<var>${Object1}</var>
+</assign>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>json.load(open("${file}", "r"))</arg>
+<arg>json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<msg timestamp="20190606 19:44:26.690" level="INFO">${File} = {'brand_name': 'Mc', 'brand_details': ' Fruite strabbery', 'brand_slogan': ' Is Not good fruits'}</msg>
+<status status="PASS" starttime="20190606 19:44:26.667" endtime="20190606 19:44:26.690"></status>
+</kw>
+<msg timestamp="20190606 19:44:26.692" level="INFO">${Object1} = {'brand_name': 'Mc', 'brand_details': ' Fruite strabbery', 'brand_slogan': ' Is Not good fruits'}</msg>
+<status status="PASS" starttime="20190606 19:44:26.665" endtime="20190606 19:44:26.692"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${Object1}</arg>
+<arg>brand_id=${Object['brand_id']}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:26.694" endtime="20190606 19:44:26.696"></status>
+</kw>
+<kw name="Api Call For Update Brand Details">
+<arguments>
+<arg>${Object1}</arg>
+</arguments>
+<assign>
+<var>${result}</var>
+</assign>
+<kw name="Put Request" library="RequestsLibrary">
+<doc>Send a PUT request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>BrandDetails</arg>
+<arg>/brands</arg>
+<arg>data=${Object1}</arg>
+</arguments>
+<assign>
+<var>${result}</var>
+</assign>
+<msg timestamp="20190606 19:44:27.324" level="INFO">Put Request using : alias=BrandDetails, uri=/brands, data={"brand_name": "Mc", "brand_details": " Fruite strabbery", "brand_slogan": " Is Not good fruits", "brand_id": "4"},                     headers=None, allow_redirects=True </msg>
+<msg timestamp="20190606 19:44:27.324" level="INFO">${result} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:44:26.700" endtime="20190606 19:44:27.325"></status>
+</kw>
+<msg timestamp="20190606 19:44:27.326" level="INFO">${result} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:44:26.697" endtime="20190606 19:44:27.326"></status>
+</kw>
+<kw name="Check Api Response Update BrandDetails">
+<arguments>
+<arg>${result}</arg>
+<arg>${Object1}</arg>
+</arguments>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${result.json()["status"]}</arg>
+<arg>${True}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:27.330" endtime="20190606 19:44:27.332"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${result.json()["message"]}</arg>
+<arg>success</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:27.333" endtime="20190606 19:44:27.335"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:27.328" endtime="20190606 19:44:27.335"></status>
+</kw>
+<tags>
+<tag>Positive</tag>
+</tags>
+<status status="PASS" starttime="20190606 19:44:26.644" endtime="20190606 19:44:27.337" critical="yes"></status>
+</test>
+<test id="s1-t4" name="Brand Details: As an user, i can able to Delete Brand Details (Delete)">
+<kw name="Create Sessions" type="setup">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190606 19:44:27.347" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20190606 19:44:27.345" endtime="20190606 19:44:27.348"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>BrandDetails</arg>
+<arg>${url}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190606 19:44:27.349" level="INFO">Creating Session using : alias=BrandDetails, url=http://3.92.189.126:8545/api/bo, headers={'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190606 19:44:27.348" endtime="20190606 19:44:27.351"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:27.343" endtime="20190606 19:44:27.351"></status>
+</kw>
+<kw name="Get Input Data">
+<arguments>
+<arg>brand_id.json</arg>
+</arguments>
+<assign>
+<var>${Object}</var>
+</assign>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>json.load(open("${file}", "r"))</arg>
+<arg>json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<msg timestamp="20190606 19:44:27.359" level="INFO">${File} = {'brand_id': '4'}</msg>
+<status status="PASS" starttime="20190606 19:44:27.356" endtime="20190606 19:44:27.359"></status>
+</kw>
+<msg timestamp="20190606 19:44:27.360" level="INFO">${Object} = {'brand_id': '4'}</msg>
+<status status="PASS" starttime="20190606 19:44:27.353" endtime="20190606 19:44:27.360"></status>
+</kw>
+<kw name="Api Call For Delete Brand Details">
+<arguments>
+<arg>${Object}</arg>
+</arguments>
+<assign>
+<var>${result}</var>
+</assign>
+<kw name="Delete Request" library="RequestsLibrary">
+<doc>Send a DELETE request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>BrandDetails</arg>
+<arg>/brands?id=${Object['brand_id']}</arg>
+</arguments>
+<assign>
+<var>${result}</var>
+</assign>
+<msg timestamp="20190606 19:44:27.938" level="INFO">Delete Request using : alias=BrandDetails, uri=/brands?id=4, data=None,                     headers=None, allow_redirects=True </msg>
+<msg timestamp="20190606 19:44:27.938" level="INFO">${result} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:44:27.364" endtime="20190606 19:44:27.938"></status>
+</kw>
+<msg timestamp="20190606 19:44:27.939" level="INFO">${result} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:44:27.362" endtime="20190606 19:44:27.940"></status>
+</kw>
+<kw name="Check Api Delete Response Items Details">
+<arguments>
+<arg>${Object}</arg>
+<arg>${result}</arg>
+</arguments>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${result.json()["status"]}</arg>
+<arg>${True}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:27.943" endtime="20190606 19:44:27.946"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${result.json()["message"]}</arg>
+<arg>success</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:44:27.946" endtime="20190606 19:44:27.948"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:44:27.942" endtime="20190606 19:44:27.949"></status>
+</kw>
+<tags>
+<tag>Positive</tag>
+</tags>
+<status status="PASS" starttime="20190606 19:44:27.341" endtime="20190606 19:44:27.951" critical="yes"></status>
+</test>
+<status status="PASS" starttime="20190606 19:44:25.030" endtime="20190606 19:44:27.956"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0">Critical Tests</stat>
+<stat pass="4" fail="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="4" fail="0">Positive</stat>
+</tag>
+<suite>
+<stat pass="4" fail="0" id="s1" name="Brands">Brands</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

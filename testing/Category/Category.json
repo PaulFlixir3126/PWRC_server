@@ -1,0 +1,9 @@
+{
+  "category_name": "Apple Juice",
+  "brand_id": 3,
+  "take_out": true,
+  "car_service": false,
+  "staff_meal": false,
+  "dine_in": false,
+  "catering": false
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"receiptRoute.js","sourceRoot":"","sources":["../../../src/routes/receiptRoute.ts"],"names":[],"mappings":";;;AAAA,qCAAiC;AACjC,wEAAqE;AAErE,MAAa,YAAY;IAIxB;QAHO,YAAO,GAAsB,IAAI,qCAAiB,EAAE,CAAC;QACrD,UAAK,GAAW,gBAAM,EAAE,CAAC;QAG/B,IAAI,CAAC,KAAK,CAAC,KAAK,CAAC,GAAG,CAAC;aACnB,IAAI,CAAC,IAAI,CAAC,OAAO,CAAC,WAAW,CAAC,CAAA;IACjC,CAAC;CACD;AARD,oCAQC"}

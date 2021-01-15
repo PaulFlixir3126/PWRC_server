@@ -1,0 +1,13 @@
+{
+  "branch_name": "Utham juice shop",
+  "branch_location": "Marthali",
+  "brand_id":2 ,
+  "restaurant_type": "Non Veg Food",
+  "branch_status": true,
+  "items": {},
+  "take_out": false,
+  "car_service": false,
+  "staff_meal": false,
+  "dine_in": true,
+  "catering": false
+}

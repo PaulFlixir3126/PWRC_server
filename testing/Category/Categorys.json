@@ -1,0 +1,8 @@
+{
+  "category_name": "Juice Food",
+  "take_out": false,
+  "car_service":false,
+  "staff_meal": false,
+  "dine_in": true,
+  "catering": false
+}

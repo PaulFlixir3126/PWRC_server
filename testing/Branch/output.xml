@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.1.2 (Python 3.7.2 on win32)" generated="20190606 19:59:37.534" rpa="false">
+<suite id="s1" name="Branch" source="D:\PWSC\Branch\Branch.robot">
+<test id="s1-t1" name="Branch Details: As an User, i can able to create Branch Details">
+<kw name="Create Sessions" type="setup">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190606 19:59:37.773" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20190606 19:59:37.773" endtime="20190606 19:59:37.773"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>BranchDetails</arg>
+<arg>${url}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190606 19:59:37.774" level="INFO">Creating Session using : alias=BranchDetails, url=http://3.92.189.126:8545/api/bo, headers={'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190606 19:59:37.773" endtime="20190606 19:59:37.774"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:59:37.772" endtime="20190606 19:59:37.774"></status>
+</kw>
+<kw name="Get Input Data">
+<arguments>
+<arg>Branchdetails.json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>json.load(open("${file}", "r"))</arg>
+<arg>json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<msg timestamp="20190606 19:59:37.776" level="INFO">${File} = {'branch_name': 'Mayuri Restaurant', 'branch_location': 'Madiwala', 'brand_id': 2, 'restaurant_type': 'Food and Juice', 'branch_status': True, 'take_out': False, 'car_service': False, 'staff_meal': Fa...</msg>
+<status status="PASS" starttime="20190606 19:59:37.774" endtime="20190606 19:59:37.776"></status>
+</kw>
+<msg timestamp="20190606 19:59:37.776" level="INFO">${File} = {'branch_name': 'Mayuri Restaurant', 'branch_location': 'Madiwala', 'brand_id': 2, 'restaurant_type': 'Food and Juice', 'branch_status': True, 'take_out': False, 'car_service': False, 'staff_meal': Fa...</msg>
+<status status="PASS" starttime="20190606 19:59:37.774" endtime="20190606 19:59:37.776"></status>
+</kw>
+<kw name="Api Call For Create Branch Details">
+<arguments>
+<arg>${File}</arg>
+</arguments>
+<assign>
+<var>${Object}</var>
+</assign>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>BranchDetails</arg>
+<arg>/branches</arg>
+<arg>data=${File}</arg>
+</arguments>
+<assign>
+<var>${Object}</var>
+</assign>
+<msg timestamp="20190606 19:59:38.473" level="INFO">Post Request using : alias=BranchDetails, uri=/branches, data=&lt;empty&gt;, headers=None, files=None, allow_redirects=True </msg>
+<msg timestamp="20190606 19:59:38.474" level="INFO">${Object} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:59:37.776" endtime="20190606 19:59:38.474"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>open("Branch_id.json", "w").write('{"branch_id":"${Object.json()["body"]["branch_id"]}"}')</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:59:38.475" endtime="20190606 19:59:38.480"></status>
+</kw>
+<msg timestamp="20190606 19:59:38.481" level="INFO">${Object} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:59:37.776" endtime="20190606 19:59:38.481"></status>
+</kw>
+<kw name="Check Api Response Branch Details">
+<arguments>
+<arg>${File}</arg>
+<arg>${Object}</arg>
+</arguments>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${Object.json()["status"]}</arg>
+<arg>${True}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:59:38.485" endtime="20190606 19:59:38.487"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${Object.json()["message"]}</arg>
+<arg>success</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:59:38.488" endtime="20190606 19:59:38.490"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:59:38.483" endtime="20190606 19:59:38.490"></status>
+</kw>
+<kw name="Validation check api Type response for Branch Details">
+<arguments>
+<arg>${Object}</arg>
+</arguments>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${Object.status_code}</arg>
+<arg>200</arg>
+</arguments>
+<msg timestamp="20190606 19:59:38.496" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20190606 19:59:38.495" endtime="20190606 19:59:38.496"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<assign>
+<var>${emptydict}</var>
+</assign>
+<msg timestamp="20190606 19:59:38.498" level="INFO">${emptydict} = {}</msg>
+<status status="PASS" starttime="20190606 19:59:38.498" endtime="20190606 19:59:38.499"></status>
+</kw>
+<kw name="Should Not Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are equal.</doc>
+<arguments>
+<arg>${Object.json()}</arg>
+<arg>${emptydict}</arg>
+</arguments>
+<msg timestamp="20190606 19:59:38.501" level="INFO">Argument types are:
+&lt;class 'dict'&gt;
+&lt;class 'robot.utils.dotdict.DotDict'&gt;</msg>
+<status status="PASS" starttime="20190606 19:59:38.499" endtime="20190606 19:59:38.501"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:59:38.493" endtime="20190606 19:59:38.502"></status>
+</kw>
+<kw name="Get length for the File">
+<arguments>
+<arg>${File}</arg>
+</arguments>
+<assign>
+<var>${lenkeys}</var>
+</assign>
+<kw name="Get Dictionary Keys" library="Collections">
+<doc>Returns keys of the given ``dictionary`` as a list.</doc>
+<arguments>
+<arg>${File}</arg>
+</arguments>
+<assign>
+<var>${keys}</var>
+</assign>
+<msg timestamp="20190606 19:59:38.507" level="INFO">${keys} = ['branch_location', 'branch_name', 'branch_status', 'brand_id', 'car_service', 'catering', 'dine_in', 'restaurant_type', 'staff_meal', 'take_out']</msg>
+<status status="PASS" starttime="20190606 19:59:38.505" endtime="20190606 19:59:38.507"></status>
+</kw>
+<kw name="Sort List" library="Collections">
+<doc>Sorts the given list in place.</doc>
+<arguments>
+<arg>${keys}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:59:38.507" endtime="20190606 19:59:38.509"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${keys}</arg>
+</arguments>
+<assign>
+<var>${lenkeys}</var>
+</assign>
+<msg timestamp="20190606 19:59:38.513" level="INFO">Length is 10</msg>
+<msg timestamp="20190606 19:59:38.513" level="INFO">${lenkeys} = 10</msg>
+<status status="PASS" starttime="20190606 19:59:38.509" endtime="20190606 19:59:38.513"></status>
+</kw>
+<msg timestamp="20190606 19:59:38.514" level="INFO">${lenkeys} = 10</msg>
+<status status="PASS" starttime="20190606 19:59:38.504" endtime="20190606 19:59:38.514"></status>
+</kw>
+<tags>
+<tag>Positive</tag>
+</tags>
+<status status="PASS" starttime="20190606 19:59:37.771" endtime="20190606 19:59:38.516" critical="yes"></status>
+</test>
+<test id="s1-t2" name="Branch Details: As an User, i can able to Get Branch Details">
+<kw name="Create Sessions" type="setup">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190606 19:59:38.531" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20190606 19:59:38.530" endtime="20190606 19:59:38.532"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>BranchDetails</arg>
+<arg>${url}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190606 19:59:38.534" level="INFO">Creating Session using : alias=BranchDetails, url=http://3.92.189.126:8545/api/bo, headers={'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190606 19:59:38.532" endtime="20190606 19:59:38.535"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:59:38.527" endtime="20190606 19:59:38.536"></status>
+</kw>
+<kw name="Get Input Data">
+<arguments>
+<arg>Branch_id.json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>json.load(open("${file}", "r"))</arg>
+<arg>json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<msg timestamp="20190606 19:59:38.543" level="INFO">${File} = {'branch_id': '9'}</msg>
+<status status="PASS" starttime="20190606 19:59:38.539" endtime="20190606 19:59:38.544"></status>
+</kw>
+<msg timestamp="20190606 19:59:38.546" level="INFO">${File} = {'branch_id': '9'}</msg>
+<status status="PASS" starttime="20190606 19:59:38.537" endtime="20190606 19:59:38.546"></status>
+</kw>
+<kw name="Api Call For Get Branch Details">
+<arguments>
+<arg>${File}</arg>
+</arguments>
+<assign>
+<var>${result}</var>
+</assign>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>BranchDetails</arg>
+<arg>/branches?id=${File["branch_id"]}</arg>
+</arguments>
+<assign>
+<var>${result}</var>
+</assign>
+<msg timestamp="20190606 19:59:39.188" level="INFO">Get Request using : alias=BranchDetails, uri=/branches?id=9, headers=None json=None</msg>
+<msg timestamp="20190606 19:59:39.189" level="INFO">${result} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:59:38.551" endtime="20190606 19:59:39.189"></status>
+</kw>
+<msg timestamp="20190606 19:59:39.190" level="INFO">${result} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:59:38.548" endtime="20190606 19:59:39.190"></status>
+</kw>
+<kw name="Check Api Response Get Branch Details">
+<arguments>
+<arg>${File}</arg>
+<arg>${result}</arg>
+</arguments>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${result.json()["status"]}</arg>
+<arg>${True}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:59:39.195" endtime="20190606 19:59:39.197"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${result.json()["message"]}</arg>
+<arg>success</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:59:39.197" endtime="20190606 19:59:39.199"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:59:39.192" endtime="20190606 19:59:39.200"></status>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<arguments>
+<arg>${result.json()["body"]}</arg>
+</arguments>
+<assign>
+<var>${Len}</var>
+</assign>
+<msg timestamp="20190606 19:59:39.203" level="INFO">Length is 1</msg>
+<msg timestamp="20190606 19:59:39.204" level="INFO">${Len} = 1</msg>
+<status status="PASS" starttime="20190606 19:59:39.202" endtime="20190606 19:59:39.204"></status>
+</kw>
+<kw name="Check Get Branch Details Length">
+<arguments>
+<arg>${Len}</arg>
+<arg>${result}</arg>
+</arguments>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${Len}" != "0"</arg>
+<arg>Log</arg>
+<arg>${result.status_code}</arg>
+<arg>ELSE</arg>
+<arg>Should Be Equal</arg>
+<arg>${result.status_code}</arg>
+<arg>${200}</arg>
+</arguments>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${result.status_code}</arg>
+</arguments>
+<msg timestamp="20190606 19:59:39.212" level="INFO">200</msg>
+<status status="PASS" starttime="20190606 19:59:39.210" endtime="20190606 19:59:39.212"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:59:39.208" endtime="20190606 19:59:39.214"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:59:39.206" endtime="20190606 19:59:39.214"></status>
+</kw>
+<tags>
+<tag>Positive</tag>
+</tags>
+<status status="PASS" starttime="20190606 19:59:38.522" endtime="20190606 19:59:39.216" critical="yes"></status>
+</test>
+<test id="s1-t3" name="Branch Details: As an User, i can able to Update Branch Details">
+<kw name="Create Sessions" type="setup">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190606 19:59:39.231" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20190606 19:59:39.228" endtime="20190606 19:59:39.231"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>BranchDetails</arg>
+<arg>${url}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190606 19:59:39.233" level="INFO">Creating Session using : alias=BranchDetails, url=http://3.92.189.126:8545/api/bo, headers={'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190606 19:59:39.231" endtime="20190606 19:59:39.235"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:59:39.226" endtime="20190606 19:59:39.236"></status>
+</kw>
+<kw name="Get Input Data">
+<arguments>
+<arg>Branch_id.json</arg>
+</arguments>
+<assign>
+<var>${Object}</var>
+</assign>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>json.load(open("${file}", "r"))</arg>
+<arg>json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<msg timestamp="20190606 19:59:39.242" level="INFO">${File} = {'branch_id': '9'}</msg>
+<status status="PASS" starttime="20190606 19:59:39.239" endtime="20190606 19:59:39.242"></status>
+</kw>
+<msg timestamp="20190606 19:59:39.243" level="INFO">${Object} = {'branch_id': '9'}</msg>
+<status status="PASS" starttime="20190606 19:59:39.237" endtime="20190606 19:59:39.243"></status>
+</kw>
+<kw name="Get Input Data">
+<arguments>
+<arg>Branchesdetails.json</arg>
+</arguments>
+<assign>
+<var>${Object1}</var>
+</assign>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>json.load(open("${file}", "r"))</arg>
+<arg>json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<msg timestamp="20190606 19:59:39.251" level="INFO">${File} = {'branch_name': 'Utham juice shop', 'branch_location': 'Marthali', 'brand_id': 2, 'restaurant_type': 'Non Veg Food', 'branch_status': True, 'items': {}, 'take_out': False, 'car_service': False, 'staff...</msg>
+<status status="PASS" starttime="20190606 19:59:39.247" endtime="20190606 19:59:39.251"></status>
+</kw>
+<msg timestamp="20190606 19:59:39.251" level="INFO">${Object1} = {'branch_name': 'Utham juice shop', 'branch_location': 'Marthali', 'brand_id': 2, 'restaurant_type': 'Non Veg Food', 'branch_status': True, 'items': {}, 'take_out': False, 'car_service': False, 'staff...</msg>
+<status status="PASS" starttime="20190606 19:59:39.245" endtime="20190606 19:59:39.252"></status>
+</kw>
+<kw name="Set To Dictionary" library="Collections">
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<arguments>
+<arg>${Object1}</arg>
+<arg>branch_id=${Object['branch_id']}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:59:39.254" endtime="20190606 19:59:39.256"></status>
+</kw>
+<kw name="Api Call For Update Branch Details">
+<arguments>
+<arg>${Object1}</arg>
+</arguments>
+<assign>
+<var>${result}</var>
+</assign>
+<kw name="Put Request" library="RequestsLibrary">
+<doc>Send a PUT request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>BranchDetails</arg>
+<arg>/branches</arg>
+<arg>data=${Object1}</arg>
+</arguments>
+<assign>
+<var>${result}</var>
+</assign>
+<msg timestamp="20190606 19:59:39.906" level="INFO">Put Request using : alias=BranchDetails, uri=/branches, data={"branch_name": "Utham juice shop", "branch_location": "Marthali", "brand_id": 2, "restaurant_type": "Non Veg Food", "branch_status": true, "items": {}, "take_out": false, "car_service": false, "staff_meal": false, "dine_in": true, "catering": false, "branch_id": "9"},                     headers=None, allow_redirects=True </msg>
+<msg timestamp="20190606 19:59:39.906" level="INFO">${result} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:59:39.260" endtime="20190606 19:59:39.907"></status>
+</kw>
+<msg timestamp="20190606 19:59:39.908" level="INFO">${result} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:59:39.257" endtime="20190606 19:59:39.908"></status>
+</kw>
+<kw name="Check Api Response Update Branch Details">
+<arguments>
+<arg>${Object1}</arg>
+<arg>${result}</arg>
+</arguments>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${result.json()["status"]}</arg>
+<arg>${True}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:59:39.913" endtime="20190606 19:59:39.915"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${result.json()["message"]}</arg>
+<arg>success</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:59:39.915" endtime="20190606 19:59:39.918"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:59:39.910" endtime="20190606 19:59:39.919"></status>
+</kw>
+<tags>
+<tag>Positive</tag>
+</tags>
+<status status="PASS" starttime="20190606 19:59:39.222" endtime="20190606 19:59:39.920" critical="yes"></status>
+</test>
+<test id="s1-t4" name="Branch Details: As an User, i can able to Delete Branch Details">
+<kw name="Create Sessions" type="setup">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>${headers}</var>
+</assign>
+<msg timestamp="20190606 19:59:39.937" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20190606 19:59:39.935" endtime="20190606 19:59:39.937"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>BranchDetails</arg>
+<arg>${url}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<msg timestamp="20190606 19:59:39.939" level="INFO">Creating Session using : alias=BranchDetails, url=http://3.92.189.126:8545/api/bo, headers={'Content-Type': 'application/json'},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20190606 19:59:39.938" endtime="20190606 19:59:39.941"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:59:39.933" endtime="20190606 19:59:39.942"></status>
+</kw>
+<kw name="Get Input Data">
+<arguments>
+<arg>Branch_id.json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>json.load(open("${file}", "r"))</arg>
+<arg>json</arg>
+</arguments>
+<assign>
+<var>${File}</var>
+</assign>
+<msg timestamp="20190606 19:59:39.949" level="INFO">${File} = {'branch_id': '9'}</msg>
+<status status="PASS" starttime="20190606 19:59:39.947" endtime="20190606 19:59:39.950"></status>
+</kw>
+<msg timestamp="20190606 19:59:39.951" level="INFO">${File} = {'branch_id': '9'}</msg>
+<status status="PASS" starttime="20190606 19:59:39.943" endtime="20190606 19:59:39.952"></status>
+</kw>
+<kw name="Api Call For Delete Branch Details">
+<arguments>
+<arg>${File}</arg>
+</arguments>
+<assign>
+<var>${Object}</var>
+</assign>
+<kw name="Delete Request" library="RequestsLibrary">
+<doc>Send a DELETE request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>BranchDetails</arg>
+<arg>/branches?id=${File["branch_id"]}</arg>
+</arguments>
+<assign>
+<var>${Object}</var>
+</assign>
+<msg timestamp="20190606 19:59:40.519" level="INFO">Delete Request using : alias=BranchDetails, uri=/branches?id=9, data=None,                     headers=None, allow_redirects=True </msg>
+<msg timestamp="20190606 19:59:40.520" level="INFO">${Object} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:59:39.955" endtime="20190606 19:59:40.521"></status>
+</kw>
+<msg timestamp="20190606 19:59:40.521" level="INFO">${Object} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20190606 19:59:39.953" endtime="20190606 19:59:40.522"></status>
+</kw>
+<kw name="Check Api Response Delete Branch Details">
+<arguments>
+<arg>${File}</arg>
+<arg>${Object}</arg>
+</arguments>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${Object.json()["status"]}</arg>
+<arg>${True}</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:59:40.526" endtime="20190606 19:59:40.529"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${Object.json()["message"]}</arg>
+<arg>success</arg>
+</arguments>
+<status status="PASS" starttime="20190606 19:59:40.529" endtime="20190606 19:59:40.531"></status>
+</kw>
+<status status="PASS" starttime="20190606 19:59:40.523" endtime="20190606 19:59:40.532"></status>
+</kw>
+<tags>
+<tag>Positive</tag>
+</tags>
+<status status="PASS" starttime="20190606 19:59:39.927" endtime="20190606 19:59:40.534" critical="yes"></status>
+</test>
+<status status="PASS" starttime="20190606 19:59:37.536" endtime="20190606 19:59:40.546"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0">Critical Tests</stat>
+<stat pass="4" fail="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="4" fail="0">Positive</stat>
+</tag>
+<suite>
+<stat pass="4" fail="0" id="s1" name="Branch">Branch</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

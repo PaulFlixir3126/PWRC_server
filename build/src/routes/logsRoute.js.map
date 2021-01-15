@@ -1,0 +1,1 @@
+{"version":3,"file":"logsRoute.js","sourceRoot":"","sources":["../../../src/routes/logsRoute.ts"],"names":[],"mappings":";;;AAAA,qCAAiC;AACjC,sEAAiE;AAEjE,MAAa,SAAS;IAIrB;QAHO,SAAI,GAAmB,IAAI,iCAAc,EAAE,CAAC;QAC5C,UAAK,GAAW,gBAAM,EAAE,CAAC;QAK/B,IAAI,CAAC,KAAK,CAAC,KAAK,CAAC,GAAG,CAAC;aACpB,GAAG,CAAC,IAAI,CAAC,IAAI,CAAC,QAAQ,CAAC,CAAC;IAC1B,CAAC;CACD;AAVD,8BAUC"}

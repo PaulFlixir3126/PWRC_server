@@ -1,0 +1,1138 @@
+{
+	"info": {
+		"_postman_id": "4e782b11-9c4e-4bf5-b96d-a7827fb60bc3",
+		"name": "POS_BACK_OFFICE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "login_luke",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a9bad17-545f-44e9-838a-ee97e8d09569",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"let keysInResponse = JSON.parse(pm.variables.get(\"loginResposeKey\"));",
+									"",
+									"pm.test(\"Response should not be 'null'\", function () {",
+									"    pm.expect(jsonData).not.eql(null); ",
+									"});",
+									"",
+									"pm.test(\"Response should not be 'empty object'\", function () {",
+									"    pm.expect(jsonData).not.eql({}); ",
+									"});",
+									"",
+									"pm.test(\"Response should not be 'empty array'\", function () {",
+									"    pm.expect(jsonData).not.eql([]); ",
+									"});",
+									"",
+									"pm.test(\"Response should not be 'empty array'\", function () {",
+									"    pm.expect(jsonData).not.eql(undefined); ",
+									"});",
+									"",
+									"pm.test(\"Response should not be 'empty text'\", function () {",
+									"    pm.expect(jsonData).not.eql(\"\"); ",
+									"});",
+									"",
+									"",
+									"pm.test(\"Check keys in the login respose\", function () {",
+									"    pm.expect(jsonData).to.be.an('object').that.has.all.keys(keysInResponse[\"firstLevel\"]);",
+									"});",
+									"    ",
+									"pm.test(\"Check token in the response\", function () {",
+									"    pm.expect(jsonData.token).not.eql(\"\"); ",
+									"});",
+									"",
+									"pm.environment.set(\"loginToken\", jsonData.token);",
+									"",
+									"pm.test(\"Check keys in the login respose 'data' property\", function () {",
+									"    pm.expect(jsonData.data).to.be.an('object').that.has.all.keys(keysInResponse[\"secondLevel\"]);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"userName\":\"luke\",\"password\":\"admin9\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "DashBoard",
+			"item": [
+				{
+					"name": "getDashbordWithDate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8d1dc17d-585b-4ecb-99cc-6273a1fd7b93",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/dashboard?sDate=2019-12-23",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"dashboard"
+							],
+							"query": [
+								{
+									"key": "sDate",
+									"value": "2019-12-23"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDashboardGraph",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4c319840-3c2b-4a58-bb39-74df6c72b8c5",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/dashboard/graph",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"dashboard",
+								"graph"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDashboardTrends",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e8f73721-51f8-4b9d-864e-f956216a38c9",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/dashboard/trends",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"dashboard",
+								"trends"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDashboardTrendsYesterday",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "397bdea7-2136-462e-b2e6-b427b9a8a56a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/dashboard/trendsyesterday",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"dashboard",
+								"trendsyesterday"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getReportsbyDate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4d530b33-9664-4b75-bf85-463a290d523c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/report/brands/dates?raw=1&brand_id=All&branch_id=&sDate=2019-12-25&eDate=2019-12-25",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"report",
+								"brands",
+								"dates"
+							],
+							"query": [
+								{
+									"key": "raw",
+									"value": "1"
+								},
+								{
+									"key": "brand_id",
+									"value": "All"
+								},
+								{
+									"key": "branch_id",
+									"value": ""
+								},
+								{
+									"key": "sDate",
+									"value": "2019-12-25"
+								},
+								{
+									"key": "eDate",
+									"value": "2019-12-25"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Brand",
+			"item": [
+				{
+					"name": "imageUpload",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e45b0f46-6646-48d0-b6da-c396120687a8",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"console.log(jsonData.body.image_id);",
+									"pm.environment.set(\"imageID\", jsonData.body.image_id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "image/png",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/root/Downloads/check.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/bo/image",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createBrand",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aa28e2f6-1076-4959-9ca4-62f2c04b044b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"brandID\", jsonData.body.brand_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"brand_name\":\"EAF Brand\",\"brand_details\":\"Check\",\"brand_slogan\":\"U too can win\",\"image_id\":{{imageID}},\"brand_name_arabic\":\"rreedg\",\"phone_no\":\"8870888336\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/bo/brands",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getImage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "604cd2ca-957f-4fc2-87bc-c71637ff247d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/image?id={{imageID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"image"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{imageID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateImage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "525cea4f-2b31-4ee3-ad39-04a0e0e349e6",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/root/Downloads/check_2.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/bo/image?id={{imageID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"image"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{imageID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllBrandDetails",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "23d1b374-c2bc-4bd7-8066-ecc697f32425",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/brands",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBrandDetails",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "679fbd10-8981-482e-8f3d-6a795178d71c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/brands?id={{brandID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"brands"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{brandID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateBrands",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e88dee32-2332-4862-9764-0184fb08a4b1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"brand_name\":\"EAF Brand\",\"brand_details\":\"Check2\",\"brand_id\":{{brandID}},\"brand_slogan\":\"U too can win\",\"image_id\":{{imageID}},\"brand_name_arabic\":\"rreedg\",\"phone_no\":\"8870888336\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/bo/brands",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"brands"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Branch",
+			"item": [
+				{
+					"name": "getBrands",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d2bc4303-c0ea-4e7c-bcf1-1f393ec95b3d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/brands",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBranches",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "586a7c6d-710a-429d-b9f2-4dbaa5a4cb71",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/branches?raw=true",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"branches"
+							],
+							"query": [
+								{
+									"key": "raw",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createBrand",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4325f9b9-da40-4dd4-af72-205c3c03c71c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"branchID\", jsonData.body.branch_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"branch_name\":\"{{branchName}}\",\"branch_location\":\"Atc\",\"brand_id\":{{brandID}},\"branch_name_arabic\":\"check\",\"take_out\":false,\"car_service\":true,\"staff_meal\":false,\"dine_in\":false,\"catering\":true,\"delivery\":false,\"branch_status\":true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/bo/branches",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"branches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTransaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"brand_id\":{{brandID}},\"branch_id\":{{branchID}},\"transaction_date\":\"2019-12-30\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/bo/brands/transactions",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"brands",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "getAuth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0d57e649-fd80-4f61-8d23-5b5640fee8e2",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/auth/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "52b8d863-d001-4d95-970c-3cd7ac010418",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonD = pm.response.json();",
+									"",
+									"let user_id = pm.variables.get(\"userIDTemp\");",
+									"",
+									"console.log(user_id);",
+									"console.log(jsonD.body._id);",
+									"",
+									"pm.environment.set(\"userIDTemp\", jsonD.body._id);",
+									"let after = pm.variables.get(\"userIDTemp\");",
+									"console.log(after);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Arock Winston\",\"email\":\"arockwinston.comorin@gmail.com\",\"userName\":\"arock\",\"password\":\"Aroc@123\",\"role\":\"bo\",\"domin\":\"backOffice\",\"im\":\"5db83ac2b462e20010bf4f1d\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOrderUsingUserID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "616f5915-3bda-48d3-b6f4-f8465d358a46",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/orders?check=true&id={{userIDTemp}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "check",
+									"value": "true"
+								},
+								{
+									"key": "id",
+									"value": "{{userIDTemp}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUserDetails",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "40df0491-2320-49f3-b4e3-a92bb61790e0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Arock Winston\",\"email\":\"arockwinston.comorin@gmail.com\",\"role\":\"bo\",\"userName\":\"arockb\",\"domin\":\"backOffice\",\"_id\":\"{{userIDTemp}}\",\"reference\":{\"brand_id\":null,\"branch_id\":null,\"brand_name\":null,\"branch_name\":null},\"password\":\"\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "deleteUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "875790a2-046c-4917-9ee2-4b59a00c4e45",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/auth/?_id={{userIDTemp}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								""
+							],
+							"query": [
+								{
+									"key": "_id",
+									"value": "{{userIDTemp}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteBrand",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3253ac66-7b94-44cb-99ee-9bd9fdc54699",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/brands?id={{brandID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"brands"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{brandID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteImage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "167aca30-b907-4052-9b70-ff86fc5769c6",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/bo/image?id={{imageID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"bo",
+								"image"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{imageID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

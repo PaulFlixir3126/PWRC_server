@@ -1,0 +1,12 @@
+{
+  "branch_name": "Mayuri Restaurant",
+  "branch_location": "Madiwala",
+  "brand_id": 2,
+  "restaurant_type": "Food and Juice",
+  "branch_status": true,
+  "take_out": false,
+  "car_service": false,
+  "staff_meal": false,
+  "dine_in": true,
+  "catering": false
+}
